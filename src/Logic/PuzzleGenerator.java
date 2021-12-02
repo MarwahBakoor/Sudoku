@@ -1,16 +1,14 @@
-/* Java program for Sudoku generator */
-import java.lang.*;
+package Logic;
 
 public class PuzzleGenerator{
 	int[] mat[];
 	int[] answer[];
-	int N; // number of columns/rows.
+	final int N =9;  // number of columns/rows. it could be final 
 	int SRN; // square root of N
-	int K; // No. Of missing digits
+	int K; // No. Of missing digits Differ From level to level 
 
 	// Constructor
-	PuzzleGenerator(int N, int K){
-		this.N = N;
+	public PuzzleGenerator(int K){
 		this.K = K;
 
 		// Compute square root of N
@@ -20,6 +18,7 @@ public class PuzzleGenerator{
 
 		mat = new int[N][N];
 		answer = new int[N][N];
+		fillValues();
 	}
 
 	// Sudoku Generator
@@ -39,6 +38,9 @@ public class PuzzleGenerator{
 		// Remove Randomly K digits to make game
 		removeKDigits();
 	}
+	
+	
+	
 
 	// Fill the diagonal SRN number of SRN x SRN matrices
 	void fillDiagonal()
@@ -53,8 +55,8 @@ public class PuzzleGenerator{
 	// Returns false if given 3 x 3 block contains num.
 	boolean unUsedInBox(int rowStart, int colStart, int num)
 	{
-		for (int i = 0; i<SRN; i++)
-			for (int j = 0; j<SRN; j++)
+		for (int i = 0; i<SRN; i++) //along row
+			for (int j = 0; j<SRN; j++) //along column 
 				if (mat[rowStart+i][colStart+j]==num)
 					return false;
 
@@ -117,14 +119,15 @@ public class PuzzleGenerator{
 	// A recursive function to fill remaining
 	// matrix
 	boolean fillRemaining(int i, int j){
-		// System.out.println(i+" "+j);
+		//.out.println(i+" "+j);
 		if (j>=N && i<N-1)
 		{
 			i = i + 1;
 			j = 0;
 		}
-		if (i>=N && j>=N)
+		if (i>=N && j>=N) {
 			return true;
+		}
 
 		if (i < SRN)
 		{
@@ -154,7 +157,6 @@ public class PuzzleGenerator{
 				mat[i][j] = num;
 				if (fillRemaining(i, j+1))
 					return true;
-
 				mat[i][j] = 0;
 			}
 		}
@@ -166,22 +168,34 @@ public class PuzzleGenerator{
 	public void removeKDigits()
 	{
 		int count = K;
-//		while (count != 0){
-//			int cellId = randomGenerator(N*N)-1;
-//
-//			System.out.println(cellId);
-//			// extract coordinates i and j
-//			int i = (cellId/N);
-//			int j = cellId%9;
-//			if (j != 0)
+		while (count != 0){
+			int cellId = randomGenerator(N*N)-1;
+			// extract coordinates i and j
+			int i = (cellId/N);
+			int j = cellId%9;
+//			System.out.print(j);
+//			if (j != 0) {
 //				j = j - 1;
-//
-//			// System.out.println(i+" "+j);
-//			if (mat[i][j] != 0){
-//				count--;
-//				mat[i][j] = 0;
+//				System.out.println(j);	
 //			}
-//		}
+
+			// System.out.println(i+" "+j);
+			if (mat[i][j] != 0){
+				count--;
+				mat[i][j] = 0;
+			}
+		}
+	}
+	
+	
+	// Get Methods 
+	
+	public int[][] getPuzle(){
+		return mat;
+	}
+	
+	public int[][] getAnswer(){
+		return answer;
 	}
 
 	// Print sudoku
@@ -203,14 +217,16 @@ public class PuzzleGenerator{
 		}
 		System.out.println();
 	}
+	
+	
 
 	// Driver code
 	public static void main(String[] args)
 	{
-		int N = 9, K = 20;
-		PuzzleGenerator sudoku = new PuzzleGenerator(N, K);
-		sudoku.fillValues();
+		int K = 60;
+		PuzzleGenerator sudoku = new PuzzleGenerator(K);
 		sudoku.printSudoku();
+
 	}
 }
 
