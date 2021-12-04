@@ -1,6 +1,5 @@
 package userinterface;
-import javafx.application.Application;
-import javafx.stage.Stage;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -15,28 +14,26 @@ import javafx.scene.image.ImageView;
 
 import userinterface.sceneControler;
 
-
-
 import constants.UIConst;
 
 //CSS by Marwah 
 
-public class SucssesInterface {
+public class FailedInterface {
 	
 	String Scorevalue; 
 	String Levelvalue;
 	
 	String name;
 	String level;
-	int score;
-	Scene SucssesScene;
+	Scene FaliedScene;
+	int Score = 0;
 	
-	SucssesInterface(String n,String l,int s){
+	FailedInterface(String n,String l){
 		name = n;
 		level =l;
-		score = s;
 		start();
 	}
+	
 	
 	public void start() {
 		VBox screenLayout= new VBox(20);		
@@ -45,34 +42,33 @@ public class SucssesInterface {
 		screenLayout.setStyle("-fx-background-color:white");
 		
 		
-		ImageView conImage = new ImageView(new Image("img//cons2.png"));
+		ImageView conImage = new ImageView(new Image("img//TryAgain.png"));
 		conImage.setFitHeight(400);
 		conImage.setFitWidth(500);
-		Text excellentText= new Text("Excellent " + name + " !!");
+		Text excellentText= new Text("Sorry " + this.name);
 		excellentText.setFont(Font.font("Leelawadee", FontWeight.BOLD,  FontPosture.REGULAR, 40));
 		excellentText.setStyle("-fx-fill:#151515;");
-		
 
-		Text scoreText = new Text("Your score is : " + score);
-		scoreText.setFont(Font.font("Leelawadee", FontWeight.LIGHT,  FontPosture.REGULAR, 22));
-		scoreText.setStyle("-fx-fill:#898989;");
+		Text tryAgain = new Text("It's not the correct answer.");
+		 tryAgain.setFont(Font.font("Leelawadee", FontWeight.LIGHT,  FontPosture.REGULAR, 22));
+		 tryAgain.setStyle("-fx-fill:#898989;");
 		
 		Button playAgainButton= new Button ("Play Again");
 		playAgainButton.setAlignment(Pos.CENTER);
 		playAgainButton.getStyleClass().add("buttons");
 		
 		playAgainButton.setOnAction(e-> {
-			HomeInterface home =  new HomeInterface(name,score); 
+			HomeInterface home =  new HomeInterface(name,0); 
 			sceneControler.window.setScene(home.mainScene);
 		});
 		
 		
 		
-		screenLayout.getChildren().addAll(conImage, excellentText, scoreText,playAgainButton);
+		screenLayout.getChildren().addAll(conImage, excellentText,tryAgain,playAgainButton);
 	
 		
-			SucssesScene = new Scene(screenLayout,UIConst.WINDOW_X,UIConst.WINDOW_Y);
-			SucssesScene.getStylesheets().add(getClass().getResource("stylesheet.css").toString());
+			FaliedScene = new Scene(screenLayout,UIConst.WINDOW_X,UIConst.WINDOW_Y);
+			FaliedScene.getStylesheets().add(getClass().getResource("stylesheet.css").toString());
 
 		}
 			

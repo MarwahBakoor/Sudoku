@@ -20,13 +20,14 @@ import javafx.geometry.Pos;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
+import javafx.geometry.Insets;
 
 import Logic.PuzzleGenerator;
 import constants.UIConst;
 import userinterface.sceneControler;
 import userinterface.SucssesInterface;
-
-
+import userinterface.FailedInterface;
+import userinterface.HomeInterface;
 
 public class GameInterface {
     // Generate Sudoku puzzle 
@@ -36,28 +37,35 @@ public class GameInterface {
 	boolean isGameStop;
 	public Scene gameScene;
 	String level;
-	String palyerNaem;
+	String palyerName;
 	Duration gameTime;
+	Timeline animation;
+	static int HighestScore;
 	
-    //distance between window and board
-//    private static final double BOARD_PADDING = 50;
-//
-//    private static final double BOARD_X_AND_Y = 576;
-//    private static final Color WINDOW_BACKGROUND_COLOR = Color.rgb(0, 150, 136);
-//    private static final Color BOARD_BACKGROUND_COLOR = Color.rgb(224, 242, 241);
-//    private static final String SUDOKU = "Sudoku";
 
 	public GameInterface(String Name, String level) { 
-		this.palyerNaem = Name;
+		this.palyerName = Name;
 		this.level = level;
+		HighestScore=0;
 		try {
 			start();
 		} catch( IOException i) {
 			
 		}
-		
 	}
 	
+	public GameInterface(String Name, String level,int s) { 
+		this.palyerName = Name;
+		this.level = level;
+		if(s > HighestScore) {
+			HighestScore= s;
+		}
+		try {
+			start();
+		} catch( IOException i) {
+			
+		}
+	}
 	public void start() throws IOException {
 		PuzzleGenerator puzzle = new PuzzleGenerator(getLevel(level));
 	    mat =  puzzle.getPuzle();
@@ -94,7 +102,7 @@ public class GameInterface {
 		pauseImage.setFitHeight(25);		
 		Text timerText = new Text();
 		
-		Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			sec++;
         	int minute = (int)Math.floor(sec/60);
         	int secounds = (int)(sec - minute*60 );
@@ -143,11 +151,21 @@ public class GameInterface {
 			
 		});
 		
+		
+		
+		Text playerName = new Text("Player Name: " + palyerName);
+		Text levelName = new Text("Level: " + level);
+		Text HighestPlayerScore= new Text("Highest Score: " + HighestScore);
+		 
 		// Timer layout
 		pause.getStyleClass().add("pause-Button");
 		HBox HLayout = new HBox(10);
 		HLayout.alignmentProperty().set(Pos.CENTER_RIGHT);
 		HLayout.getChildren().addAll(timerText, pauseImage,resume);
+		HBox header = new HBox(40);
+		header.getChildren().addAll(playerName,levelName,HighestPlayerScore,HLayout);
+		header.setPadding(new Insets(10));
+		header.alignmentProperty().set(Pos.CENTER_LEFT);
 		
 		
 		
@@ -188,23 +206,36 @@ public class GameInterface {
 		
 		checkButton.setOnMouseClicked(e-> 
 		{
-			animation.pause();
 		try {
 			checkAnswer(sudokuFields);
 		} catch( IOException i) {
 			
 		}});
 		
+		// Home Button 
+		
+		VBox homeButton = new VBox();
+		ImageView homeImag = new ImageView(new Image("img//home.png"));
+		homeImag.setFitWidth(50);
+		homeImag.setFitHeight(50);
+		Text homeText = new Text("Home");
+		homeButton.alignmentProperty().set(Pos.CENTER);
+		homeButton.getChildren().addAll(homeImag,homeText);
+		homeButton.getStyleClass().add("undo-button");
+		homeButton.setOnMouseClicked(e->{
+			HomeInterface backHome = new HomeInterface(palyerName,0);
+			sceneControler.window.setScene(backHome.mainScene);
+		});		
 		// Undo and finish buttons layout
 		
-		HBox buttomLayout =  new HBox(380);
-		buttomLayout.getChildren().addAll(undoButton,checkButton);
+		HBox buttomLayout =  new HBox(150);
+		buttomLayout.getChildren().addAll(undoButton,homeButton,checkButton);
 		buttomLayout.alignmentProperty().set(Pos.CENTER);
 		
 		// THE GAME LAYOUT
 		
 		VBox vbox = new VBox(10);
-		vbox.getChildren().addAll(HLayout,sudukoGrid, buttomLayout);
+		vbox.getChildren().addAll(header,sudukoGrid, buttomLayout);
 		
 		
 		gameScene = new Scene(vbox, UIConst.WINDOW_X,UIConst.WINDOW_Y);
@@ -243,21 +274,20 @@ public class GameInterface {
 				else {
 					userAnswer[i][j] = Integer.parseInt(sudokuFields[i][j].getText());
 				}
-				
-			}}
-		
+				}}
+		animation.pause();
 		if(compareing(userAnswer,ans)) {
 			int levelWeight = getLevel(level);
-			SucssesInterface sucWindow = new SucssesInterface(palyerNaem,level,Score(sec,levelWeight));
+			SucssesInterface sucWindow = new SucssesInterface(palyerName,level,Score(sec,levelWeight));
 			sceneControler.window.setScene(sucWindow.SucssesScene);
 //			a.setAlertType(AlertType.CONFIRMATION);
-			addNameAndScore(palyerNaem,levelWeight);
+			addNameAndScore(palyerName,levelWeight);
 //			a.setContentText("Good job you have solve the sudoku");
 //			a.show();
 		}else {
-			a.setAlertType(AlertType.ERROR);
-			a.setContentText("hard luck");
-			a.show();
+			FailedInterface FailedWindow = new FailedInterface(palyerName,level);
+			sceneControler.window.setScene(FailedWindow.FaliedScene);
+
 		}
 	}
 	
@@ -294,13 +324,8 @@ public class GameInterface {
 		//System.out.println(file.exists());
 		FileWriter fw = new FileWriter(file, true);
 		BufferedWriter print = new BufferedWriter(fw);
-		print.write("\nName: " + name + "         Score: " + score + "         time: " + sec + "s");
+		print.write("\n" + name + " " + score + " " + sec/60.0);
 		print.close();
 	}
 	
-	
-	
-//	public static void main(String[] args) {
-//		launch(args);
-//	}
 }

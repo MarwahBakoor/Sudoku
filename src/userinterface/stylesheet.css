@@ -4,15 +4,14 @@
 	  -fx-alignment: center;
 	  -fx-border-radius:0;
 	  -fx-background-insets: 1;
-	  -fx-background-color: #ffffff;
-	  
+	  -fx-background-color: #ffffff; 
 }
 
 .sudocu-field:focused {
 	  -fx-background-color: #F6F6F6;
 }
 .empty-textField{
-	-fx-background-color: #f2fbff;
+	-fx-background-color: #fcfcff;
 }
 
 .undo-button{
@@ -39,17 +38,13 @@
 	-fx-border-width: 0 2 2 0;
 }
 
-.name-lable{
-	 -fx-font-size:20;
-}
-
 .name-textField{
 	-fx-max-width:250;
 	-fx-min-height:40;
 	-fx-border-radius:0;
 	-fx-background-insets: 1;
-	-fx-background-color: #ffffff;
-	-fx-border-color: #64D9FA;
+	-fx-background-color: transparent;
+	-fx-border-color: #7B76A7;
 	-fx-border-width: 1;
 	-fx-border-radius:20;
 }
@@ -59,7 +54,7 @@
 	-fx-max-width:250;
     -fx-background: white;
     -fx-background-color: transparent;
-    -fx-border-color: #64D9FA;
+    -fx-border-color: #7B76A7;
 	-fx-border-width: 0 0 2 0;
     -fx-cell-size: 2; 
 }
@@ -68,19 +63,69 @@
     -fx-background-color:  white; 
     }
     
-.start-button{
-	-fx-font-size:25;
+.buttons{
+	-fx-font-size:20;
 	-fx-max-width:250;
 	-fx-min-height:50;
 	-fx-background-color:  white;
-	-fx-border-color: #5D49DD;
+	-fx-border-color: #B9B4E8;
 	-fx-border-width: 2;
 	-fx-border-radius:20;
 	-fx-cursor: hand;
 }
 
-.start-button:hover{
+.buttons:hover{
+	 -fx-background-color:  linear-gradient(#D5EFF7,  #B9B4E8);
+	 -fx-background-radius: 20;
+	 -fx-text-fill:white;
+	 -fx-border-color:transparent;
+}
+
+
+
+.play-again-button:hover {
 	 -fx-background-color:  linear-gradient(rgba(55,37,159,1),  rgba(72,61,185,1));
 	 -fx-background-radius: 20;
 	 -fx-text-fill:white;
+
+	
 }
+
+.get-it-button {
+	-fx-font-size:20;
+	-fx-max-width:300;
+	-fx-min-height:50;
+	-fx-background-color: #8F89C7;
+	-fx-text-fill:white;
+	-fx-background-radius: 30px;
+	-fx-cursor: hand;
+}
+
+.get-it-button:hover{
+	-fx-background-color: #504A8C;
+}
+
+.circle-button{
+	-fx-font-size:28;
+	-fx-font-weight:bold;
+	-fx-max-width:50;
+	-fx-background-color:white;
+	-fx-border-width: 2;
+	-fx-border-color: #8A85BB;
+	-fx-text-fill:#8A85BB;
+	 -fx-border-radius:100;
+	-fx-background-radius: 100;
+	-fx-cursor: hand;
+}
+
+.circle-button:hover{
+
+	-fx-background-color:#8A85BB;
+	-fx-text-fill:white;
+
+}
+
+.home-buttons{
+		-fx-cursor: hand;
+}
+

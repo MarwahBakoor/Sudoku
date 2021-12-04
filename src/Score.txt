@@ -1,3 +1,0 @@
-Name: Marw         Score: 8         time: 84
-Name: Marwah         Score: 7         time: 87s
-Name: Marwah         Score: 12         time: 10s
