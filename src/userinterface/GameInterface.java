@@ -245,7 +245,7 @@ public class GameInterface {
 	public int getLevel(String level) {
 		switch(level) {
 		case "Fast":
-			return 1;
+			return 10;
 		case "Easy":
 			return 20;
 		case "Medium":
