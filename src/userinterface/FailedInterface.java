@@ -42,7 +42,7 @@ public class FailedInterface {
 		screenLayout.setStyle("-fx-background-color:white");
 		
 		
-		ImageView conImage = new ImageView(new Image("img//TryAgain.png"));
+		ImageView conImage = new ImageView(new Image("img//sad.gif"));
 		conImage.setFitHeight(400);
 		conImage.setFitWidth(500);
 		Text excellentText= new Text("Sorry " + this.name);

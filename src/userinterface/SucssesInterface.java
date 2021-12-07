@@ -45,10 +45,10 @@ public class SucssesInterface {
 		screenLayout.setStyle("-fx-background-color:white");
 		
 		
-		ImageView conImage = new ImageView(new Image("img//cons2.png"));
+		ImageView conImage = new ImageView(new Image("img//good.gif"));
 		conImage.setFitHeight(400);
 		conImage.setFitWidth(500);
-		Text excellentText= new Text("Excellent " + name + " !!");
+		Text excellentText= new Text("YOU DID IT " + name + " !!");
 		excellentText.setFont(Font.font("Leelawadee", FontWeight.BOLD,  FontPosture.REGULAR, 40));
 		excellentText.setStyle("-fx-fill:#151515;");
 		

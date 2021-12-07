@@ -2,7 +2,6 @@ package userinterface;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
@@ -168,7 +167,7 @@ public class HomeInterface {
                 	sceneControler.window.setScene(game.gameScene);
         			
         		}else {
-        			GameInterface game = new GameInterface(pname,level);
+        			GameInterface game = new GameInterface(pname,level,0);
                 	sceneControler.window.setScene(game.gameScene);
         		}
         		

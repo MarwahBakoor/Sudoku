@@ -13,7 +13,9 @@
 .empty-textField{
 	-fx-background-color: #fcfcff;
 }
-
+.pause-Button{
+	-fx-cursor: hand;
+}
 .undo-button{
 	-fx-min-Width:100;
 	-fx-padding: 10;
@@ -127,5 +129,9 @@
 
 .home-buttons{
 		-fx-cursor: hand;
+}
+
+.hbox,.vbox {
+	-fx-background-color:white
 }
 

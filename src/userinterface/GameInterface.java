@@ -42,17 +42,7 @@ public class GameInterface {
 	Timeline animation;
 	static int HighestScore;
 	
-
-	public GameInterface(String Name, String level) { 
-		this.palyerName = Name;
-		this.level = level;
-		HighestScore=0;
-		try {
-			start();
-		} catch( IOException i) {
-			
-		}
-	}
+	// constractors Take palyer name , level of the game, and in case the player have plaied before
 	
 	public GameInterface(String Name, String level,int s) { 
 		this.palyerName = Name;
@@ -60,14 +50,11 @@ public class GameInterface {
 		if(s > HighestScore) {
 			HighestScore= s;
 		}
-		try {
-			start();
-		} catch( IOException i) {
-			
-		}
+		start();
 	}
-	public void start() throws IOException {
+	public void start(){
 		PuzzleGenerator puzzle = new PuzzleGenerator(getLevel(level));
+		
 	    mat =  puzzle.getPuzle();
 		ans =  puzzle.getAnswer();
 		SudokuTextField[][] sudokuFields = new SudokuTextField [9][9];
@@ -114,12 +101,6 @@ public class GameInterface {
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.play();
 		
-		// pase and resume buttons
-		Button pause = new Button("pause");
-		Button resume = new Button("resume");
-		
-		resume.setVisible(false);
-
 		
 		pauseImage.setOnMouseClicked(e ->{ 
 			
@@ -144,12 +125,6 @@ public class GameInterface {
 			
 		});
 		
-		resume.setOnAction(e ->{ 
-			
-			resume.setVisible(false);
-			pause.setVisible(true);
-			
-		});
 		
 		
 		
@@ -158,15 +133,14 @@ public class GameInterface {
 		Text HighestPlayerScore= new Text("Highest Score: " + HighestScore);
 		 
 		// Timer layout
-		pause.getStyleClass().add("pause-Button");
+		pauseImage.getStyleClass().add("pause-Button");
 		HBox HLayout = new HBox(10);
 		HLayout.alignmentProperty().set(Pos.CENTER_RIGHT);
-		HLayout.getChildren().addAll(timerText, pauseImage,resume);
+		HLayout.getChildren().addAll(timerText, pauseImage);
 		HBox header = new HBox(40);
 		header.getChildren().addAll(playerName,levelName,HighestPlayerScore,HLayout);
-		header.setPadding(new Insets(10));
+		header.setPadding(new Insets(10,0,0,10));
 		header.alignmentProperty().set(Pos.CENTER_LEFT);
-		
 		
 		
 		// undo button
@@ -245,7 +219,7 @@ public class GameInterface {
 	public int getLevel(String level) {
 		switch(level) {
 		case "Fast":
-			return 10;
+			return 1;
 		case "Easy":
 			return 20;
 		case "Medium":
