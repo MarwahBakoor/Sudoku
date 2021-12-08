@@ -3,8 +3,13 @@ package userinterface;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.HBox;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import  javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -27,6 +32,7 @@ public class FailedInterface {
 	String level;
 	Scene FaliedScene;
 	int Score = 0;
+	boolean d;
 	
 	FailedInterface(String n,String l){
 		name = n;
@@ -45,10 +51,25 @@ public class FailedInterface {
 		ImageView conImage = new ImageView(new Image("img//sad.gif"));
 		conImage.setFitHeight(400);
 		conImage.setFitWidth(500);
-		Text excellentText= new Text("Sorry " + this.name);
-		excellentText.setFont(Font.font("Leelawadee", FontWeight.BOLD,  FontPosture.REGULAR, 40));
-		excellentText.setStyle("-fx-fill:#151515;");
+		Text hardLuckText= new Text("Sorry " + this.name);
+		hardLuckText.setFont(Font.font("Leelawadee", FontWeight.BOLD,  FontPosture.REGULAR, 40));
+		hardLuckText.setStyle("-fx-fill:#151515;");
 
+		d= true;
+		Timeline TextAnimation = new Timeline(
+				new KeyFrame(Duration.seconds(0.3),e-> {
+					if(d) {
+						hardLuckText.setFill(Color.rgb(160,196, 207));
+					}else {
+						hardLuckText.setFill(Color.rgb(185, 180, 232));
+					}
+					d=!d;
+				}
+				));
+		TextAnimation.setAutoReverse(true);
+		TextAnimation.setCycleCount(Animation.INDEFINITE);
+		TextAnimation.play();
+		
 		Text tryAgain = new Text("It's not the correct answer.");
 		 tryAgain.setFont(Font.font("Leelawadee", FontWeight.LIGHT,  FontPosture.REGULAR, 22));
 		 tryAgain.setStyle("-fx-fill:#898989;");
@@ -64,7 +85,7 @@ public class FailedInterface {
 		
 		
 		
-		screenLayout.getChildren().addAll(conImage, excellentText,tryAgain,playAgainButton);
+		screenLayout.getChildren().addAll(conImage, hardLuckText,tryAgain,playAgainButton);
 	
 		
 			FaliedScene = new Scene(screenLayout,UIConst.WINDOW_X,UIConst.WINDOW_Y);

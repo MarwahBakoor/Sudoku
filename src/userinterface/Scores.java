@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import constants.UIConst;
+import Logic.user;
 
 
 public class Scores extends Application {
@@ -71,7 +73,7 @@ public void start(Stage stage) throws Exception {
 				d=!d;
 			}
 			));
-	 TextAnimation.setAutoReverse(true);
+	TextAnimation.setAutoReverse(true);
 	TextAnimation.setCycleCount(Animation.INDEFINITE);
 	TextAnimation.play();
 	 
@@ -137,7 +139,7 @@ public void start(Stage stage) throws Exception {
 
 private  SortedList<user> getUserList() throws NumberFormatException, IOException {
 
-	///////takes name and scores from txt file created in class user
+	///////takes name and scores from txt file
 	BufferedReader br = null;
 	try {
 		File file = new File("C:\\Users\\moora\\eclipse-workspace\\Sudoku-Puzzle\\src\\Score.txt");
@@ -161,7 +163,9 @@ private  SortedList<user> getUserList() throws NumberFormatException, IOExceptio
 				// add the name score and time to the user
 				userArray[i].setName(scan.next());
 				userArray[i].setScore(scan.nextInt());
-				userArray[i].setTime(scan.nextDouble());
+				//reduce the number of Digits
+				DecimalFormat numberFormat = new DecimalFormat("#.00");
+				userArray[i].setTime(Double.parseDouble(numberFormat.format(scan.nextDouble())));
 				i++; 
 			}
 		}
@@ -169,10 +173,10 @@ private  SortedList<user> getUserList() throws NumberFormatException, IOExceptio
 	// create an sorted list 
     SortedList<user> sortedList = new SortedList<>(FXCollections.observableArrayList(userArray), (user user1, user user2) -> {
     	//in order to sort the list 
-    	// this case doesn't matter it just to not have an error in case the object is empty
+    	// This case doesn't matter it just to not have an error in case the object is empty
     	if(user1 == null || user2 == null) {
     		 return -1;
-    		 // if the score of the user1 is less than the secound the switch them 
+    	// if the score of the user1 is less than the secound the switch them 
     	}else if( user1.getScore() <  user2.getScore()  ) {
           return 1;
       } else {

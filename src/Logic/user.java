@@ -1,4 +1,4 @@
-package userinterface;
+package Logic;
 
 public class user {
 

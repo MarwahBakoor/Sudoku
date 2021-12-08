@@ -170,16 +170,8 @@ public class PuzzleGenerator{
 		int count = K;
 		while (count != 0){
 			int cellId = randomGenerator(N*N)-1;
-			// extract coordinates i and j
 			int i = (cellId/N);
 			int j = cellId%9;
-//			System.out.print(j);
-//			if (j != 0) {
-//				j = j - 1;
-//				System.out.println(j);	
-//			}
-
-			// System.out.println(i+" "+j);
 			if (mat[i][j] != 0){
 				count--;
 				mat[i][j] = 0;

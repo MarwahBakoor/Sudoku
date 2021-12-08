@@ -8,8 +8,9 @@ import userinterface.HomeInterface;
 public class sceneControler extends Application{
 	public static Stage window;
 	public void start(Stage primaryStage) throws Exception  {
-		
+		// set primaryStage to window 
 		window = primaryStage;
+		// show the home inter face when the game start
 		HomeInterface home =  new HomeInterface(); 
 		primaryStage.setScene( home.mainScene);
 		primaryStage.setTitle("Sudoku");

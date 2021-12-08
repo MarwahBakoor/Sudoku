@@ -1,10 +1,15 @@
 package userinterface;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 import  javafx.scene.text.Font;
@@ -30,6 +35,7 @@ public class SucssesInterface {
 	String level;
 	int score;
 	Scene SucssesScene;
+	boolean d;
 	
 	SucssesInterface(String n,String l,int s){
 		name = n;
@@ -39,9 +45,9 @@ public class SucssesInterface {
 	}
 	
 	public void start() {
+		//screen layout 
 		VBox screenLayout= new VBox(20);		
 		screenLayout.setAlignment(Pos.CENTER);	
-		
 		screenLayout.setStyle("-fx-background-color:white");
 		
 		
@@ -51,6 +57,23 @@ public class SucssesInterface {
 		Text excellentText= new Text("YOU DID IT " + name + " !!");
 		excellentText.setFont(Font.font("Leelawadee", FontWeight.BOLD,  FontPosture.REGULAR, 40));
 		excellentText.setStyle("-fx-fill:#151515;");
+		
+		d= true;
+		Timeline TextAnimation = new Timeline(
+				new KeyFrame(Duration.seconds(0.3),e-> {
+					if(d) {
+						excellentText.setFill(Color.rgb(160,196, 207));
+					}else {
+						excellentText.setFill(Color.rgb(185, 180, 232));
+					}
+					d=!d;
+				}
+				));
+		
+		TextAnimation.setAutoReverse(true);
+		TextAnimation.setCycleCount(Animation.INDEFINITE);
+		TextAnimation.play();
+		
 		
 
 		Text scoreText = new Text("Your score is : " + score);

@@ -31,6 +31,7 @@ import userinterface.HomeInterface;
 
 public class GameInterface {
     // Generate Sudoku puzzle 
+	
 	int[][] mat;
 	int[][] ans;
 	long sec = 0;
@@ -50,17 +51,25 @@ public class GameInterface {
 		if(s > HighestScore) {
 			HighestScore= s;
 		}
+		// when the class created the start method will be called 
 		start();
 	}
+	
+	// start 
 	public void start(){
+		//Generate the puzzle
 		PuzzleGenerator puzzle = new PuzzleGenerator(getLevel(level));
 		
+		//get puzzle and answer matrices
 	    mat =  puzzle.getPuzle();
 		ans =  puzzle.getAnswer();
+		
+		// create matrix with 9x9 SudokuTextField
 		SudokuTextField[][] sudokuFields = new SudokuTextField [9][9];
 		GridPane sudukoGrid = new GridPane();		
 		sudukoGrid.setStyle("-fx-border-width: 2; -fx-border-color: #3f3f3f;");
 		
+		// pseudo elemnt for the sudoko board will be used when the game stop
 		for(int i=0; i<9 ; i++) {
 			for (int j=0; j<9 ; j++) {
 				SudokuTextField backtext = new SudokuTextField(74,74);
@@ -70,6 +79,9 @@ public class GameInterface {
 				
 				
 			}}
+		
+		
+		/// Add the sudoku fields to the grid and set the value for each field
 		
 		for(int i=0; i<9 ; i++) {
 			for (int j=0; j<9 ; j++) {
@@ -82,8 +94,7 @@ public class GameInterface {
 		}
 		
 		
-		
-		//Timer
+		//Timer Code
 		ImageView pauseImage= new ImageView( new Image("img\\pause.png"));
 		pauseImage.setFitWidth(25);
 		pauseImage.setFitHeight(25);		
@@ -126,13 +137,13 @@ public class GameInterface {
 		});
 		
 		
-		
+		// Player information
 		
 		Text playerName = new Text("Player Name: " + palyerName);
 		Text levelName = new Text("Level: " + level);
 		Text HighestPlayerScore= new Text("Highest Score: " + HighestScore);
 		 
-		// Timer layout
+		// Timer and player information layout
 		pauseImage.getStyleClass().add("pause-Button");
 		HBox HLayout = new HBox(10);
 		HLayout.alignmentProperty().set(Pos.CENTER_RIGHT);
@@ -143,7 +154,7 @@ public class GameInterface {
 		header.alignmentProperty().set(Pos.CENTER_LEFT);
 		
 		
-		// undo button
+		// Undo Button
 		
 		VBox undoButton = new VBox();
 		ImageView undoImag = new ImageView(new Image("img//undo.png"));
@@ -165,8 +176,6 @@ public class GameInterface {
 		});
 		
 		// Check Button 
-		
-
 		
 		VBox checkButton = new VBox();
 		
@@ -200,7 +209,9 @@ public class GameInterface {
 			HomeInterface backHome = new HomeInterface(palyerName,0);
 			sceneControler.window.setScene(backHome.mainScene);
 		});		
-		// Undo and finish buttons layout
+		
+		
+		// Undo , home and Check buttons layout
 		
 		HBox buttomLayout =  new HBox(150);
 		buttomLayout.getChildren().addAll(undoButton,homeButton,checkButton);
@@ -216,10 +227,12 @@ public class GameInterface {
 		gameScene .getStylesheets().add(getClass().getResource("stylesheet.css").toString());
 		
 	}
+	
+	// method  match every level to weight 
 	public int getLevel(String level) {
 		switch(level) {
 		case "Fast":
-			return 1;
+			return 10;
 		case "Easy":
 			return 20;
 		case "Medium":
@@ -235,30 +248,38 @@ public class GameInterface {
 	
 	// check the answer method
 	public void checkAnswer(SudokuTextField[][] sudokuFields) throws IOException {
+		// create an alertt
 		 Alert a= new Alert(AlertType.NONE);
 		int[][] userAnswer = new int[9][9];
+		
 		for(int i=0; i<9 ; i++) {
 			for (int j=0; j<9 ; j++) {
+				//check if ther is sudoku field empty and gave and alert in this case
 				if(sudokuFields[i][j].getText().isEmpty()) {
 					a.setAlertType(AlertType.ERROR);
 					a.setContentText("You should complete the sudoko field before finish the game");
 					a.show();
+					// stop the method
 					return;
 				}
 				else {
+					// get the user answer 
 					userAnswer[i][j] = Integer.parseInt(sudokuFields[i][j].getText());
 				}
 				}}
+		// stop time
 		animation.pause();
+		//check the answer
 		if(compareing(userAnswer,ans)) {
 			int levelWeight = getLevel(level);
+			//if it is right show to SucssesInterface
 			SucssesInterface sucWindow = new SucssesInterface(palyerName,level,Score(sec,levelWeight));
 			sceneControler.window.setScene(sucWindow.SucssesScene);
-//			a.setAlertType(AlertType.CONFIRMATION);
+			//add the score and name to the file
 			addNameAndScore(palyerName,levelWeight);
-//			a.setContentText("Good job you have solve the sudoku");
-//			a.show();
+
 		}else {
+			//if it is wrong show to SucssesInterface
 			FailedInterface FailedWindow = new FailedInterface(palyerName,level);
 			sceneControler.window.setScene(FailedWindow.FaliedScene);
 
@@ -266,7 +287,7 @@ public class GameInterface {
 	}
 	
 	
-	//Compareing Answers method
+	//Comparing Answers method
 	
 	static boolean compareing(int[][] matrixInput, int[][] matrixSudoku) {
 		 boolean result=true;
@@ -284,18 +305,18 @@ public class GameInterface {
 	}
 	
 	
+	// Calculating the score
 	public int Score(long time, int level) {
 		double min = (double)sec/120;
 		return (int)Math.ceil(level/min);
 	}
 	
-	
+	// Save the Score with the name in file
 	public void addNameAndScore(String N, int levelpoint) throws IOException {
 		String name = N;
 		int score = Score(sec, levelpoint);
 		//store name and score in txt file
 		File file = new File("C:\\Users\\moora\\eclipse-workspace\\Sudoku-Puzzle\\src\\Score.txt");
-		//System.out.println(file.exists());
 		FileWriter fw = new FileWriter(file, true);
 		BufferedWriter print = new BufferedWriter(fw);
 		print.write("\n" + name + " " + score + " " + sec/60.0);

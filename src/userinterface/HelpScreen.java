@@ -30,8 +30,8 @@ public void start(Stage primaryStage) {
 	Text Title = new Text("How to Play Sudoku?");
 	Title.setFont(Font.font("Leelawadee", FontWeight.BOLD,  FontPosture.REGULAR, 30));
 	ImageView sudokuimage = new ImageView(new Image("img\\sudokuboard.png"));
-
-
+	
+	// text for the slides saved in arrays
 	
 	String[] STitleList = {
 		"Sudoku Rule 1: Use Numbers 1-9",
@@ -47,6 +47,8 @@ public void start(Stage primaryStage) {
 			"to figure out which numbers can go in each space is to use “process of elimination” by checking to see which other numbers are already included within each square – since there can be no duplication of numbers 1-9 within each square (or row or column). his is how the process of elimination works in Sudoku – you find out which spaces are available, which numbers are missing – and then deduce, based on the position of those numbers within the grid, which numbers fit into each space."
 		};
 	
+	
+	
 	sudokuimage.setFitHeight(350);
 	sudokuimage.setFitWidth(350);
 	Text secoundryTitle = new Text(STitleList[0]);
@@ -59,18 +61,7 @@ public void start(Stage primaryStage) {
 	
 	
 	VBox ruleLayout = new VBox(10);
-	
-//	ComboBox<String> dd = new ComboBox();
-//	List<String> list = Font.getFamilies();
-//	dd.getItems().addAll(list);
-//	TextInstruction1.setFont(Font.font(list.get(0), FontWeight.LIGHT,  FontPosture.REGULAR, 22));
-//	dd.setOnAction(e-> {
-//		String v = dd.getValue();
-//		TextInstruction1.setFont(Font.font(v, FontWeight.LIGHT,  FontPosture.REGULAR, 22));
-//	});
-//	
 	ruleLayout.prefHeight(5000);
-
 	ruleLayout.getChildren().addAll(secoundryTitle,TextInstruction1);
 
 	
@@ -84,7 +75,7 @@ public void start(Stage primaryStage) {
 	PrevButton.getStyleClass().add("circle-button");
 	HBox NPbuttonsLayout = new HBox(10);
 	NPbuttonsLayout.getChildren().addAll(PrevButton,NextButton);
-	
+	// when press next button
 	NextButton.setOnAction(e-> {
 		if(index < 3) {
 		index++;
@@ -96,6 +87,7 @@ public void start(Stage primaryStage) {
 		}
 	});
 	
+	// when press prev button
 	PrevButton.setOnAction(e-> {
 		if(index > 0) {
 			index--;
@@ -106,6 +98,8 @@ public void start(Stage primaryStage) {
 			}
 		}
 	});
+	
+	
 	//Close Button 
 	
 	Button closeButton = new Button("Get It 👌");

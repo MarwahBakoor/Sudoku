@@ -58,7 +58,7 @@ public class SudokuTextField extends TextField {
     }
 
     /*
-    For some reason, when I override these two functions, the TextFields stop duplicating numeric inputs...
+     * Override This method to except just numbers with one digit
      */
     
     @Override
